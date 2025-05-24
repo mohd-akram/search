@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" sizes="any" type="image/svg+xml" href="favicon.svg">
-    <title>bingoogle</title>
+    <link rel="icon" href="favicon.png">
+    <title>bingle</title>
     <style>
       body {
         font-family: sans-serif;
@@ -28,36 +28,77 @@
       header {
         text-align: center;
       }
+      input, button {
+        border: none;
+      }
+      input {
+        padding: 0.5rem;
+        color: black;
+        background: white;
+      }
+      button {
+        padding: 0.5rem;
+        color: black;
+        background: #eee;
+        font-weight: unset;
+      }
+      button:hover {
+        background: #ddd;
+      }
+      .logo {
+        margin: 0;
+      }
+      .logo a {
+        text-decoration: none;
+      }
       .search-container {
         display: flex;
         justify-content: center;
+        margin-top: 10rem;
         margin-bottom: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .js .search-container {
+        flex-direction: row;
+        margin-top: 1rem;
+      }
+      #searchForm {
+        display: flex;
+        justify-content: center;
+        min-width: 0;
+      }
+      .search-box legend {
+        position: absolute;
+        top: 3.5rem;
+      }
+      .js .search-box legend {
+        display: none;
       }
       .search-box {
         display: flex;
-        width: 60%;
-        max-width: 40rem;
-        box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,0.2);
+        min-width: 0;
+        border: none;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0 0 0.1rem rgba(0,0,0,0.7);
+        position: relative;
+        justify-content: center;
+      }
+      .search-box, .search-box input, .search-box button {
+        border-radius: 0.5rem;
+      }
+      .search-box input, .search-box button {
+        font-size: unset;
       }
       .search-box input {
-        font-size: larger;
-        flex-grow: 1;
         min-width: 0;
-        padding: 0.7rem;
-        border: 0.1rem solid #ddd;
-        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
       .search-box button {
-        font-size: larger;
-        padding: 0.5rem 1rem;
-        background: #4285f4;
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      .search-box button:hover {
-        background: #3367d6;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
       }
       .results-container {
         display: flex;
@@ -65,51 +106,29 @@
         justify-content: space-between;
         gap: 1rem;
       }
-      .engine-results {
+      .results {
         display: flex;
         flex: 1;
         flex-direction: column;
-        background: white;
-        box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,0.1);
-        border-radius: 0.1rem;
       }
-      .engine-header {
-        display: flex;
-        justify-content: space-between;
-        background: #f8f9fa;
-        padding: 0.5rem 1rem;
-        border-bottom: 0.1rem solid #e0e0e0;
-        color: #666;
+      .results header {
+        display: none;
       }
-      .engine-header h2 {
-        font-size: unset;
-        margin: 0;
-      }
-      .google-blue {
-        color: #4285f4;
-      }
-      .google-red {
-        color: #DB4437;
-      }
-      .google-green {
-        color: #0F9D58;
-      }
-      .google-yellow {
-        color: #F4B400;
-      }
-      .bing-gray {
-        color: #737373;
-      }
-      .results {
+      .results iframe {
         flex: 1;
         border: none;
       }
-      @media (max-width: 768px) {
+      .google-blue { color: #4285f4; }
+      .google-red { color: #DB4437; }
+      .google-green { color: #0F9D58; }
+      .google-yellow { color: #F4B400; }
+      .bing-gray { color: #737373; }
+      @media (max-width: 50rem) {
         .results-container {
           flex-direction: column;
         }
-        .search-box {
-          width: 90%;
+        .js .collapse {
+          display: none;
         }
         body {
           height: auto;
@@ -121,49 +140,50 @@
           color: white;
         }
         body {
-          background: #222;
-        }
-        input, .engine-results {
           background: #111;
+        }
+        input {
+          background: #444;
+        }
+        button {
+          color: white;
+          background: #333;
+        }
+        button:hover {
+          background: #222;
         }
       }
     </style>
   </head>
 
   <body>
-    <header>
-      <h1><span class="bing-gray">bing</span><span
-          class="google-red">o</span><span
-          class="google-yellow">o</span><span
-          class="google-blue">g</span><span
-          class="google-green">l</span><span
-          class="google-red">e</span></h1>
-    </header>
-
     <main>
       <div class="search-container">
-        <form id="searchForm" class="search-box">
-          <input type="text" name="q" placeholder="Enter your search query..."
-            autofocus>
-          <button type="submit">Search</button>
+        <header>
+          <h1 class="logo"><a href="?"><span class="bing-gray">b</span><span
+                class="bing-gray collapse">in</span><span
+                class="google-blue">g</span><span
+                class="google-green collapse">l</span><span
+                class="google-red collapse">e</span></a></h1>
+        </header>
+        <form id="searchForm">
+          <fieldset class="search-box">
+            <legend>Search Google and Bing</legend>
+            <input type="search" name="q" size="40" autofocus>
+            <button type="submit">Search</button>
+          </fieldset>
         </form>
       </div>
 
       <div class="results-container">
-        <section class="engine-results">
-          <header class="engine-header">
-            <h2>Google Results</h2>
-            <small>powered by Google</small>
-          </header>
-          <iframe id="googleResults" class="results" src="about:blank"></iframe>
+        <section class="results">
+          <header><h2>Google</h2></header>
+          <iframe id="googleResults" src="about:blank"></iframe>
         </section>
 
-        <section class="engine-results">
-          <header class="engine-header">
-            <h2>Bing Results</h2>
-            <small>powered by Bing</small>
-          </header>
-          <iframe id="bingResults" class="results" src="about:blank"></iframe>
+        <section class="results">
+          <header><h2>Bing</h2></header>
+          <iframe id="bingResults" src="about:blank"></iframe>
         </section>
       </div>
     </main>
@@ -172,6 +192,7 @@
       const q = new URLSearchParams(location.search).get('q');
       if (q) {
         document.title = `${q} - ${document.title}`;
+        document.body.classList.add('js');
         searchForm.elements.namedItem('q').value = q;
         // igu=1 needed for iframe
         googleResults.src =
